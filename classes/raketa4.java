@@ -97,17 +97,20 @@
 				
 				String sep = "";
 				
-				System.out.println ( "padeciu: " + res_kilimo.n ); 
+				System.out.println ( "padeciu: " + res_kilimo.getN() ); 
 				
-				for ( int i = 0; i < res_kilimo.n; i++ ) { 
+				for ( int i = 0; i < res_kilimo.getN(); i++ ) { 
 
 					System.out.println (
 					
-						String.format("%.2f", res_kilimo.padetys [ i ].t ) 
-						+ " " + String.format("%.2f", res_kilimo.padetys [ i ].v ) 
-						+ " "+ String.format("%.2f", res_kilimo.padetys [ i ].h ) 
+						String.format("%.2f", res_kilimo.paiimtiItaji( i ).getT() ) 
+						+ " " + String.format("%.2f", res_kilimo.paiimtiItaji( i ).getV() ) 
+						+ " "+ String.format("%.2f", res_kilimo.paiimtiItaji( i ).getH() ) 
 					);
-					myWriter.write( sep + String.format("%.2f", res_kilimo.padetys [ i ].t ) + "," + String.format("%.2f", res_kilimo.padetys [ i ].h ) );				
+					myWriter.write( 
+						sep + String.format("%.2f", res_kilimo.paiimtiItaji( i ).getT() ) 
+						+ "," + String.format("%.2f", res_kilimo.paiimtiItaji( i ).getH() ) 
+					);				
 					sep = ",";
 				}
 				

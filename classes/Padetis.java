@@ -3,7 +3,7 @@
 
 	class Padetis {
 		
-		public Double t, v, h;
+		private Double t, v, h;
 		
 		
 		public Padetis() {
@@ -15,4 +15,34 @@
 			this.v = greitis;
 			this.h = aukstis;
 		}
+		
+		public void setT ( Double laikas ) {
+			
+			this.t = laikas;
+		}
+		
+		public void setV ( Double greitis ) {
+			
+			this.v = greitis;
+		}
+
+		public void setH ( Double aukstis) {
+			
+			this.h = aukstis;
+		}
+
+		public Double getT () {
+			
+			return this.t;
+		}
+		
+		public Double getV () {
+			
+			return this.v;
+		}
+
+		public Double getH () {
+
+			return this.h;
+		}		
 	}
