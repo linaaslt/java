@@ -18,7 +18,7 @@ public class SkrydisCheck2 {
 			
 		double padetis = 0.0, pad_skirtumas = 0.0, greitis = 0.0;
 		double laiko_skirtumas = 0.0, laikas = 0.0, pagreitis = 0.0;
-		double prad_greitis = 0.0, greitis2 = 0.0, t = 0.0;
+		double prad_greitis = 0.0, greitis2 = 0.0, t = 0.0, pagreitis2 = 0.0;
 		
 		for ( int i = 1; i < padetys.getN(); i++ ) { 		
 												
@@ -33,31 +33,33 @@ public class SkrydisCheck2 {
 			padetys.paiimtiItaji( i ).setV ( greitis );
 			
 			System.out.println ( "greitis" + " " + greitis );
-			System.out.println ( "t" + " " + t );						
+			
 		}
 		
 		
 		for ( int i = 0; i < padetys.getN (); i++ ){
 						
 			pagreitis = ( padetys.paiimtiItaji( i ).getV() - greitis ) / laiko_skirtumas;
-							
-			System.out.println ( "pagreitis" + " " + pagreitis );
-				
+			pagreitis2 = ( padetys.paiimtiItaji ( i ).getV() - greitis ) / laiko_skirtumas;
+			System.out.println ( "pagreitis" + " " + pagreitis );			
+			System.out.println ( "pagreitis2" + " " + pagreitis );
+						 
+		}
+		 
+			prad_greitis = padetys.paiimtiItaji( 1 ).getV() + ( pagreitis * padetys.paiimtiItaji( 1 ).getT());
+			System.out.println ( "prad greitis" + " " + prad_greitis );
+			
+		boolean reiksmes_teisingos = true;
+		
+		if (Math.abs(pagreitis - pagreitis2)> 0.001) {
+			
+			reiksmes_teisingos = false;
 		}
 		
-		for ( int i = 1; i < padetys.getN (); i++ ){
-			
-			prad_greitis = padetys.paiimtiItaji( i ).getV() + ( pagreitis * padetys.paiimtiItaji( i ).getT());
-			System.out.println ( "p greitis"+ " " + prad_greitis );
-						
-			if (prad_greitis == greitis){	//cia dar reik sutvarkyt
-				System.out.println ("viskas gerai");
-				
-			} else {
-					System.out.println ("duomenys neatitinka");
-			}
-			
+		if (!reiksmes_teisingos){
+			System.out.println ( "gerai" );
 		}
+		
 	}
 			
 	public static void main(String[] args) throws Exception {
@@ -68,7 +70,7 @@ public class SkrydisCheck2 {
 	   
 			double[] skaiciai = new double [ 10000 ];
 			int kiekis = 0;
-			double suma = 0, vid = 0, v = 0, pagreitis = 0;		
+			double suma = 0, vid = 0, v = 0;		
 			Double dt = 0.2, greitis = 0.0, v0 = 0.0;
 			double aukstis = 0.0;
 		try {
