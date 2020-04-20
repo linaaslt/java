@@ -18,7 +18,8 @@ public class SkrydisCheck2 {
 			
 		double padetis = 0.0, pad_skirtumas = 0.0, greitis = 0.0;
 		double laiko_skirtumas = 0.0, laikas = 0.0, pagreitis = 0.0;
-		double prad_greitis = 0.0, greitis2 = 0.0, t = 0.0, pagreitis2 = 0.0;
+		double prad_greitis = 0.0, pagreitis2 = 0.0;
+		double pag_skirtumas = 0.0;
 		
 		for ( int i = 1; i < padetys.getN(); i++ ) { 		
 												
@@ -36,17 +37,24 @@ public class SkrydisCheck2 {
 			
 		}
 		
+		greitis = padetys.paiimtiItaji( 1 ).getV();
 		
-		for ( int i = 0; i < padetys.getN (); i++ ){
+		for ( int i = 2; i < padetys.getN() - 1; i++ ){
 						
 			pagreitis = ( padetys.paiimtiItaji( i ).getV() - greitis ) / laiko_skirtumas;
-			pagreitis2 = ( padetys.paiimtiItaji ( i ).getV() - greitis ) / laiko_skirtumas;
-			System.out.println ( "pagreitis" + " " + pagreitis );			
-			System.out.println ( "pagreitis2" + " " + pagreitis );
-						 
+			pagreitis2 = ( padetys.paiimtiItaji ( i + 1 ).getV() - greitis ) / laiko_skirtumas;
+												 
 		}
-		 
-			prad_greitis = padetys.paiimtiItaji( 1 ).getV() + ( pagreitis * padetys.paiimtiItaji( 1 ).getT());
+		
+		for ( int i = 1; i < padetys.getN() ; i++ ){
+						
+			pag_skirtumas = pagreitis - pagreitis2;	
+			System.out.println ( "pag skirt" + " " + pag_skirtumas );						 
+			padetys.paiimtiItaji( i ).setA ( pag_skirtumas );
+		}
+			
+			
+			prad_greitis = padetys.paiimtiItaji( 1 ).getV() + ( pag_skirtumas * padetys.paiimtiItaji( 1 ).getT());
 			System.out.println ( "prad greitis" + " " + prad_greitis );
 			
 		boolean reiksmes_teisingos = true;
@@ -57,7 +65,7 @@ public class SkrydisCheck2 {
 		}
 		
 		if (!reiksmes_teisingos){
-			System.out.println ( "gerai" );
+			System.out.println ( "Pagreiciai atitinka" );
 		}
 		
 	}
@@ -92,7 +100,8 @@ public class SkrydisCheck2 {
 					
 						Double.parseDouble (skaiciu_strs [ i ] ),
 						0.0,
-						Double.parseDouble ( skaiciu_strs [i + 1]) 
+						Double.parseDouble ( skaiciu_strs [ i + 1]),
+						Double.parseDouble ( skaiciu_strs [ i ] )
 					));
 									
 				} 

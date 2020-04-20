@@ -2,17 +2,18 @@ package classes;
 
 	class Padetis {
 		
-		private Double t, v, h;
+		private Double t, v, h, a;
 		
 		
 		public Padetis() {
 		}
 		
-		public Padetis ( Double laikas, Double greitis, Double aukstis ) {
+		public Padetis ( Double laikas, Double greitis, Double aukstis, Double pagreitis ) {
 			
 			this.t = laikas;
 			this.v = greitis;
 			this.h = aukstis;
+			this.a = pagreitis;
 		}
 		
 		public void setT ( Double laikas ) {
@@ -29,7 +30,12 @@ package classes;
 			
 			this.h = aukstis;
 		}
-
+		
+		public void setA ( Double pagreitis) {
+			
+			this.a = pagreitis;
+		}
+		
 		public Double getT () {
 			
 			return this.t;
@@ -43,5 +49,11 @@ package classes;
 		public Double getH () {
 
 			return this.h;
-		}		
+		}
+		
+		public Double getA () {
+
+			return this.a;
+		}
+						
 	}
