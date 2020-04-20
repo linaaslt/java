@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 
 
-public class MaxSumaKiekisVid {
+class MaxSumaKiekisVid {
 	
 	public static void main(String[] args) throws Exception {
 	   
@@ -100,9 +100,13 @@ public class MaxSumaKiekisVid {
 				if ( min > skaiciai [ i ]) {
 					min = skaiciai [ i ];
 				}
-			suma = this.v / this.t;	
 			}
-			System.out.println( "likusiu skaiciu suma: " + suma );
+			System.out.println( "minimumas: " + suma );
 		}
+		
+			
+	Padetys myObj = new Padetys();
+    System.out.println(myObj.kuris);
 	}
 }
+

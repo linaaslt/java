@@ -1,5 +1,4 @@
-
-	package classes;
+package classes;
 
 	import java.io.*;
 

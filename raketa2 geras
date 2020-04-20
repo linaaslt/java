@@ -1,0 +1,82 @@
+
+
+	import java.io.*;
+
+	class raketa2 {
+		
+		
+		public static void skaiciuotiRaketa2 ( Double prad_greitis, Double dti ) {
+		
+			Double dt = dti;
+			Double v0 = prad_greitis;
+			Double g = 9.8;
+			Double t = 0.0;
+			Double h = 0.0;
+			Double v = v0;
+			Double h_kritimo = 0.0;
+			
+			int ct = 0;
+			
+			System.out.println ( "  t   v  h " );
+			
+			do {
+				
+				ct++;
+				
+				System.out.println ( String.format("%.2f", t ) + " " + String.format("%.2f", v ) + " "+ String.format("%.2f", h ) );
+				
+				t = t + dt;
+				v = v0 - g * t;
+			
+				
+				if ( v > 0 ) {
+				
+					h =  v0 * t - ( g * t * t ) / 2;
+					
+				} else {
+									
+					h_kritimo = v0 * t - ( g * t * t ) / 2;
+					
+					
+					h = h_kritimo;				
+				}	
+			
+			} while ( ( h > 0 ) && ( ct < 500 ) );
+			
+				
+					
+			System.out.println ( "Laikas: " + t + " greitis: " + v + "Aukstis: " + h );			
+		}
+		
+		public static void main(String[] args) {
+			
+			BufferedReader br = new BufferedReader ( new InputStreamReader ( System.in ) );
+			
+			System.out.println ( "Raketos skridimo lentele" );
+
+				Double v0;	
+				Double dt ;
+
+			
+			try {
+				
+				System.out.print ( "dt? " );				
+				dt = Double.parseDouble ( br.readLine() );
+				System.out.print ( "v0? " );
+				v0 = Double.parseDouble ( br.readLine() );	
+			
+								
+				
+				br.close();
+				
+				skaiciuotiRaketa2 ( v0, dt );
+				
+			} catch   (Exception e) {
+			
+				System.out.println( "Error Encountered getting user input:" + e.getMessage() );
+				// e.printStackTrace();
+			}
+			
+
+		}
+	}

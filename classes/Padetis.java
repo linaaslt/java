@@ -1,5 +1,4 @@
-
-	package classes;
+package classes;
 
 	class Padetis {
 		
