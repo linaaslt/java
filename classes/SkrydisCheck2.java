@@ -34,40 +34,46 @@ public class SkrydisCheck2 {
 			padetys.paiimtiItaji( i ).setV ( greitis );
 			
 			System.out.println ( "greitis" + " " + greitis );
-			
 		}
 		
-		greitis = padetys.paiimtiItaji( 1 ).getV();
+		// greitis = padetys.paiimtiItaji( 1 ).getV();
 		
-		for ( int i = 2; i < padetys.getN() - 1; i++ ){
+		for ( int i = 2; i < padetys.getN(); i++ ){
 						
-			pagreitis = ( padetys.paiimtiItaji( i ).getV() - greitis ) / laiko_skirtumas;
-			pagreitis2 = ( padetys.paiimtiItaji ( i + 1 ).getV() - greitis ) / laiko_skirtumas;
-												 
+			pagreitis = 
+					( 
+							padetys.paiimtiItaji( i ).getV() 
+						- 
+							padetys.paiimtiItaji( i - 1 ).getV() 
+					) 
+				/ 
+					laiko_skirtumas
+			;
+			
+			( ( PadetisX ) padetys.paiimtiItaji ( i ) ).setA ( pagreitis );								 
 		}
 		
-		for ( int i = 1; i < padetys.getN() ; i++ ){
+		boolean reiksmes_teisingos = true;		
+		
+		for ( int i = 2; i < padetys.getN() -1; i++ ){
 						
-			pag_skirtumas = pagreitis - pagreitis2;	
-			System.out.println ( "pag skirt" + " " + pag_skirtumas );						 
-			padetys.paiimtiItaji( i ).setA ( pag_skirtumas );
+			pag_skirtumas = 
+					( ( PadetisX ) padetys.paiimtiItaji ( i ) ).getA() 
+				- 
+					( ( PadetisX ) padetys.paiimtiItaji( i + 1  ) ).getA()
+			;
+			
+			if ( Math.abs ( pag_skirtumas ) > 0.001 ) {
+			
+				reiksmes_teisingos = false;
+				System.out.println ( "Pagreiciai neatitinka: " );
+				System.out.println ( "padeties nr .:" + i );
+				System.out.println ( "pag skirt" + " " + pag_skirtumas );
+			}					
 		}
 			
-			
-			prad_greitis = padetys.paiimtiItaji( 1 ).getV() + ( pag_skirtumas * padetys.paiimtiItaji( 1 ).getT());
-			System.out.println ( "prad greitis" + " " + prad_greitis );
-			
-		boolean reiksmes_teisingos = true;
-		
-		if (Math.abs(pagreitis - pagreitis2)> 0.001) {
-			
-			reiksmes_teisingos = false;
-		}
-		
-		if (!reiksmes_teisingos){
-			System.out.println ( "Pagreiciai atitinka" );
-		}
-		
+		prad_greitis = padetys.paiimtiItaji( 1 ).getV() + ( pag_skirtumas * padetys.paiimtiItaji( 1 ).getT() );
+		System.out.println ( "prad greitis" + " " + prad_greitis );	
 	}
 			
 	public static void main(String[] args) throws Exception {
@@ -76,43 +82,39 @@ public class SkrydisCheck2 {
 		Padetys padetys = new Padetys();
 		Padetys res_kilimo; 
 	   
-			double[] skaiciai = new double [ 10000 ];
-			int kiekis = 0;
-			double suma = 0, vid = 0, v = 0;		
-			Double dt = 0.2, greitis = 0.0, v0 = 0.0;
-			double aukstis = 0.0;
+		double[] skaiciai = new double [ 10000 ];
+		int kiekis = 0;
+		double suma = 0, vid = 0, v = 0;		
+		Double dt = 0.2, greitis = 0.0, v0 = 0.0;
+		double aukstis = 0.0;
+		
 		try {
 																												// open input stream test.txt for reading purpose.
 			BufferedReader br = new BufferedReader( new FileReader( "duomenys.csv" ) );
 			
 			System.out.println ( "duomenu failo turinys:" );
 			
-			
 			while ( ( thisLine = br.readLine() ) != null ) {
 			 
 				System.out.println( thisLine );
 				String[] skaiciu_strs = thisLine.split ( "," );
-				int poru = (int) (skaiciu_strs.length / 2 );
+				int poru = (int) ( skaiciu_strs.length / 2 );
 				
-				for ( int i=0; i < poru * 2; i+=2 ) {
+				for ( int i = 0; i < poru * 2; i += 2 ) {
 					
-					padetys.papildyti ( new Padetis (
+					padetys.papildyti ( new PadetisX (
 					
-						Double.parseDouble (skaiciu_strs [ i ] ),
+						Double.parseDouble ( skaiciu_strs [ i ] ),
 						0.0,
-						Double.parseDouble ( skaiciu_strs [ i + 1]),
-						Double.parseDouble ( skaiciu_strs [ i ] )
+						Double.parseDouble ( skaiciu_strs [ i + 1 ] ),
+						0.0
 					));
 									
 				} 
 				
-				System.out.println( "Kiek poru " + poru );	
-				
-			
+				System.out.println( "Kiek poru " + poru );
 			}	
 			Analizuoti ( padetys );
-			
-			
 			
 		} catch( IOException e ) {
 			
