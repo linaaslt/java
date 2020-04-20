@@ -21,11 +21,20 @@ public class SkrydisCheck2 {
 		double prad_greitis = 0.0, pagreitis2 = 0.0;
 		double pag_skirtumas = 0.0;
 		
+		/**
+		*Metodas Analizuoti nuodos informaciją
+		*iš Padetys klasės, padėtys funkcijos.
+		*Sukuriami reikalingi kintamieji
+		*kurie bus naudojami programoje
+		*@param klases Padėtys, padetys elementas
+		*@author Linas
+		*/
 		for ( int i = 1; i < padetys.getN(); i++ ) { 		
 												
-												//prad greit: Vi = Vf + (a * t); greitis, v = s/t
-												//pagr a = dv/dt  a = (v gal - v prad) /dt
-			
+		/**										
+		*Ciklas apskaičiuoti reikšmėm,									
+		*kuris truks iki paskutinės N reikšmės.
+		*/
 			pad_skirtumas = padetys.paiimtiItaji( i ).getH() - padetis;
 			laiko_skirtumas = padetys.paiimtiItaji( i ).getT() - laikas;
 			greitis = pad_skirtumas / laiko_skirtumas;
@@ -36,7 +45,12 @@ public class SkrydisCheck2 {
 			System.out.println ( "greitis" + " " + greitis );
 		}
 		
-		// greitis = padetys.paiimtiItaji( 1 ).getV();
+		/**
+		*Apskaičiuojamos reikšmės, V elementui
+		*priskiriama greičio reikšmė.
+		*Kurią bus galima naudoti atliekant 
+		*skaičiavimus.
+		*/
 		
 		for ( int i = 2; i < padetys.getN(); i++ ){
 						
@@ -53,7 +67,20 @@ public class SkrydisCheck2 {
 			( ( PadetisX ) padetys.paiimtiItaji ( i ) ).setA ( pagreitis );								 
 		}
 		
+		/**Sukuriamas ciklas apskaičiuoti pagreitį,
+		*imama informacija iš padetys funkcijos V
+		*elemento. Skaičiavimai pradedami nuo
+		*antros reikšmės. Pagreitis priskiriamas
+		*dukterinės klasės A elementui.
+		*@param 
+		*/
+		
 		boolean reiksmes_teisingos = true;		
+		
+		/**
+		*sukuriamas elemtas reiksmes_teisingos
+		*kuriam priskiriama true vertė.
+		*/
 		
 		for ( int i = 2; i < padetys.getN() -1; i++ ){
 						
@@ -71,22 +98,48 @@ public class SkrydisCheck2 {
 				System.out.println ( "pag skirt" + " " + pag_skirtumas );
 			}					
 		}
-			
+		
+		/**
+		*Sukuriamas ciklas apskaičiuoti pag_skirtumus,
+		*skaičiavimams naudojami duomenys iš dukterinės
+		*klasės PadetisX, A elemento.
+		*Toliau tikriname ar pagreičiai atitinka mūsų
+		*iškeltą salygą. reiksmes_teisingos priskiriama
+		*false reikšmė. Atvaizduojame skaičiavimus ekrane.
+		*/
+		
 		prad_greitis = padetys.paiimtiItaji( 1 ).getV() + ( pag_skirtumas * padetys.paiimtiItaji( 1 ).getT() );
 		System.out.println ( "prad greitis" + " " + prad_greitis );	
 	}
-			
+		/**
+		*Apskaičiuojamas prad_greitis, imant
+		*informaciją iš V elemento pirmosios
+		*reikšmės. Rezultatas išvedamas į ekraną.
+		*/
+		
 	public static void main(String[] args) throws Exception {
 	   
 		String thisLine = null;
 		Padetys padetys = new Padetys();
-		Padetys res_kilimo; 
-	   
+		/** 
+	    *Masyvui thisLine prikiriama
+		*null reikšmė. null reikšmė
+		*pasikeis kai bus pirmą kartą
+		*panaudota. 
+		*Sukuriamas naujas elementas padetys,
+		*aprašytas Padetys klasėje.
+		*/
+		
 		double[] skaiciai = new double [ 10000 ];
 		int kiekis = 0;
 		double suma = 0, vid = 0, v = 0;		
 		Double dt = 0.2, greitis = 0.0, v0 = 0.0;
 		double aukstis = 0.0;
+		
+		/**
+		*Sukuriama nauji kintamieji
+		*kurie bus naudojami skaičiavime.
+		*/
 		
 		try {
 																												// open input stream test.txt for reading purpose.
@@ -113,7 +166,23 @@ public class SkrydisCheck2 {
 				} 
 				
 				System.out.println( "Kiek poru " + poru );
-			}	
+			}
+			
+		/**
+		*Skaityti informaciją iš failo iškviečiame 
+		*BufferedReader'į, kuris skaitys informaciją
+		*iš duomenys.csv failo.
+		*Sukuriamas metodas kuris truks iki
+		*paskutinės masyvo thisLine reikšmės.
+		*Masyvo elementai yra išskirstomi juos 
+		*atskiriant "," (kableliu). 
+		*Surandama kiek bus porų, kurios
+		*atvaizduojamos metodo pabaigoje.
+		*Ciklas sukuriamas surasti elementų
+		*reikšmes, kurios bus naudojamos 
+		*programoje atlikti skaičiavimus.
+		*/
+			
 			Analizuoti ( padetys );
 			
 		} catch( IOException e ) {
