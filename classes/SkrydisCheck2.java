@@ -10,31 +10,27 @@ import java.io.IOException;
 import java.io.File; 
 import java.io.FileWriter;
 
+/**
+*@author Linas
+*/
 
 public class SkrydisCheck2 {
 	
-	
+		/**
+		*Metodas Analizuoti atliekami
+		*pirminiai skaiciavimai, 
+		*reikalingi programai.
+		*Greitis saugomas V elemente.
+		*@param klases Padetys, padetys elementas
+		*/
 	public static void Analizuoti( Padetys padetys ) {
 			
 		double padetis = 0.0, pad_skirtumas = 0.0, greitis = 0.0;
 		double laiko_skirtumas = 0.0, laikas = 0.0, pagreitis = 0.0;
-		double prad_greitis = 0.0, pagreitis2 = 0.0;
-		double pag_skirtumas = 0.0;
+		double prad_greitis = 0.0;	
 		
-		/**
-		*Metodas Analizuoti nuodos informaciją
-		*iš Padetys klasės, padėtys funkcijos.
-		*Sukuriami reikalingi kintamieji
-		*kurie bus naudojami programoje
-		*@param klases Padėtys, padetys elementas
-		*@author Linas
-		*/
-		for ( int i = 1; i < padetys.getN(); i++ ) { 		
-												
-		/**										
-		*Ciklas apskaičiuoti reikšmėm,									
-		*kuris truks iki paskutinės N reikšmės.
-		*/
+		for ( int i = 1; i < padetys.getN(); i++ ) { 			
+		
 			pad_skirtumas = padetys.paiimtiItaji( i ).getH() - padetis;
 			laiko_skirtumas = padetys.paiimtiItaji( i ).getT() - laikas;
 			greitis = pad_skirtumas / laiko_skirtumas;
@@ -44,14 +40,15 @@ public class SkrydisCheck2 {
 			
 			System.out.println ( "greitis" + " " + greitis );
 		}
-		
-		/**
-		*Apskaičiuojamos reikšmės, V elementui
-		*priskiriama greičio reikšmė.
-		*Kurią bus galima naudoti atliekant 
-		*skaičiavimus.
+	}	
+		/**Metodas apskaičiuoti pagreitį,
+		*informacija imama iš Analizuoti
+		*metodo. Gautoji reikšmė saugoma
+		*dukterinės klasės A elemente.
 		*/
 		
+	public static void Pagreicio_rad( Padetys padetys ) {
+	
 		for ( int i = 2; i < padetys.getN(); i++ ){
 						
 			pagreitis = 
@@ -67,20 +64,21 @@ public class SkrydisCheck2 {
 			( ( PadetisX ) padetys.paiimtiItaji ( i ) ).setA ( pagreitis );								 
 		}
 		
-		/**Sukuriamas ciklas apskaičiuoti pagreitį,
-		*imama informacija iš padetys funkcijos V
-		*elemento. Skaičiavimai pradedami nuo
-		*antros reikšmės. Pagreitis priskiriamas
-		*dukterinės klasės A elementui.
-		*@param 
+		
+		}
+		/**
+		*Metodas apskaičiuoti pag_skirtumus,
+		*bei prad_greitį.
+		*Tikrinama ar pag_skirtumas atitinka salygą.
+		*Skaičiavimai išvedami į ekraną.
 		*/
 		
+	public static void Skaiciavimai( Padetys padetys ) {
+		
+		double pag_skirtumas = 0.0;
 		boolean reiksmes_teisingos = true;		
 		
-		/**
-		*sukuriamas elemtas reiksmes_teisingos
-		*kuriam priskiriama true vertė.
-		*/
+		
 		
 		for ( int i = 2; i < padetys.getN() -1; i++ ){
 						
@@ -98,25 +96,11 @@ public class SkrydisCheck2 {
 				System.out.println ( "pag skirt" + " " + pag_skirtumas );
 			}					
 		}
-		
-		/**
-		*Sukuriamas ciklas apskaičiuoti pag_skirtumus,
-		*skaičiavimams naudojami duomenys iš dukterinės
-		*klasės PadetisX, A elemento.
-		*Toliau tikriname ar pagreičiai atitinka mūsų
-		*iškeltą salygą. reiksmes_teisingos priskiriama
-		*false reikšmė. Atvaizduojame skaičiavimus ekrane.
-		*/
-		
+						
 		prad_greitis = padetys.paiimtiItaji( 1 ).getV() + ( pag_skirtumas * padetys.paiimtiItaji( 1 ).getT() );
 		System.out.println ( "prad greitis" + " " + prad_greitis );	
 	}
-		/**
-		*Apskaičiuojamas prad_greitis, imant
-		*informaciją iš V elemento pirmosios
-		*reikšmės. Rezultatas išvedamas į ekraną.
-		*/
-		
+				
 	public static void main(String[] args) throws Exception {
 	   
 		String thisLine = null;
@@ -129,17 +113,17 @@ public class SkrydisCheck2 {
 		*Sukuriamas naujas elementas padetys,
 		*aprašytas Padetys klasėje.
 		*/
-		
+		/**
+		*Sukuriama nauji kintamieji
+		*kurie bus naudojami skaičiavime.
+		*/
 		double[] skaiciai = new double [ 10000 ];
 		int kiekis = 0;
 		double suma = 0, vid = 0, v = 0;		
 		Double dt = 0.2, greitis = 0.0, v0 = 0.0;
 		double aukstis = 0.0;
 		
-		/**
-		*Sukuriama nauji kintamieji
-		*kurie bus naudojami skaičiavime.
-		*/
+		
 		
 		try {
 																												// open input stream test.txt for reading purpose.
@@ -184,6 +168,8 @@ public class SkrydisCheck2 {
 		*/
 			
 			Analizuoti ( padetys );
+			Pagreicio_rad ( padetys );
+			Skaiciavimai ( padetys );
 			
 		} catch( IOException e ) {
 			
