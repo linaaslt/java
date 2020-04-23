@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 public class SkaiciaiTekste {
 	
 	String skaiciai = "";
+	String simbolis = "";
 	
 	public static boolean yraSkaitmuo ( String simbolis ) {
 		
@@ -38,7 +39,7 @@ public class SkaiciaiTekste {
 	
 	public static boolean yraRaide (String raides) {
 		
-		String [] raides2 = {  "mlrd" };
+		String [] raides2 = {  "," };
 		
 		boolean yra_raide = false;
 		
@@ -56,8 +57,8 @@ public class SkaiciaiTekste {
 	public static void main(String[] args) throws FileNotFoundException {
 	   
 		String thisLine = null;
-		//double[] skaiciai = new double [ 10000 ];
-		String skaiciai = "";		
+		String simboliai = "";		
+		int [] kvadr = new int[1000];
 		
 		try {	
 						// open input stream test.txt for reading purpose.
@@ -65,8 +66,9 @@ public class SkaiciaiTekste {
 			
 			System.out.println ( "duomenu failo turinys:" );
 			
-			String simb;
+			//double [] kvadr = new double [ 1000 ];
 			
+			String simb;
 			int kiekis_skaitmenu = 0;	
 			
 			while ( ( thisLine = br.readLine() ) != null ) {		
@@ -75,38 +77,37 @@ public class SkaiciaiTekste {
 								 
 				skaiciu_strs = skaiciu_strs.replaceAll("[^0-9]+", ",");
 								
-				for ( int i = 0; i < thisLine.length(); i++ ) {
+				for (int i = 0; i < thisLine.length(); i++ ) {
 					
-					simb =  thisLine.substring( i, i + 1 );
-					
-					
+					simb =  thisLine.substring( i, i + 1 );					
 						
-					if ( yraSkaitmuo ( simb )) {
-																	
+					simboliai += simb;
+									 
+					if (( yraSkaitmuo ( simb ))/* && (yraRaide (simb))*/) {
+						
+						kvadr[i]+= i;											
 						kiekis_skaitmenu++;
-					
-						skaiciai += simb + ",";
-							
+						System.out.println ("Skaicius rastas pozicijoje " + kvadr[ i ]);
 						
 					}
-									
-				}			 
 				
+				}	
+						 
 				Pattern pattern = Pattern.compile("Publikuota:(.*)");
 				Matcher matcher = pattern.matcher(thisLine);
 
 				if(matcher.find()){
+					
 					String dateString = matcher.group(1);   //I'm using the Capturing groups to capture only the value.
 					java.util.Date date = new SimpleDateFormat("yyyy-mm-dd").parse(dateString);
 					System.out.println("Straipsnis publikuotas:" + date);
 				}
-				//System.out.println ( "skaiciai eiluteje: " + skaiciu_strs );
+				
 			}
-				System.out.println ( "skaiciai tekste:" + skaiciai );		
+			
+				//System.out.println ( "skaiciai tekste:" + simboliai );		
 				System.out.println ( "viso skaitmenu: " + kiekis_skaitmenu );
-			
-		
-			
+						
 		} catch( Exception e ) {
 			
 			e.printStackTrace();
