@@ -1,4 +1,5 @@
-
+import java.awt.EventQueue;
+import java.io.OutputStream;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -9,38 +10,58 @@ import java.io.IOException;
 import java.io.File; 
 import java.io.FileWriter;
 import java.awt.*;        // Using AWT containers and components
-import java.awt.event.*;  // Using AWT events classes and listener interfaces
- 
- 
+import java.awt.event.*;
+import java.awt.Dimension;
+import javax.swing.JSplitPane;  // Using AWT events classes and listener interfaces
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List; 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.border.Border;
+
 // An AWT GUI program inherits the top-level container java.awt.Frame
-public class Windo extends Frame
+public class Windo extends JFrame
       implements ActionListener, WindowListener {
       // This class acts as listener for ActionEvent and WindowEvent
       // A Java class can extend only one superclass, but it can implement multiple interfaces.
-	private TextArea taDisplay;
-	private TextField tfCount;  // Declare a TextField component
+	private JTextArea taDisplay;
+	private JTextField tfCount;  // Declare a TextField component
 	private Button btnCount;    // Declare a Button component
 	private int count = 0;
 	public String skaicius = "";
-	public String du = "As ir tu ir mes kartu";
+	
 	// Counter's value
 		 
    // Constructor to setup the GUI components and event handlers
    public Windo() {
+		
+		
 		setLayout(new FlowLayout()); // "super" Frame sets to FlowLayout
 
-		add(new Label("Spausk"));   // "super" Frame adds an anonymous Label
+		add(new Label("Maks., sumos, kiekio, vid. skaiciavimas"));   // "super" Frame adds an anonymous Label
 	 
-		tfCount = new TextField("0", 10); // Construct the TextField
+		tfCount = new JTextField("0", 10); // Construct the TextField
 		tfCount.setEditable(false);       // read-only
 		add(tfCount);                     // "super" Frame adds TextField
 
 		btnCount = new Button("Count");  // Construct the Button
 		add(btnCount);   
 
-		taDisplay = new TextArea( 5, 40 );
-		taDisplay.setFont(new Font("Serif", Font.ITALIC, 16));		// 5 rows, 40 columns
-		add(taDisplay);	  // "super" Frame adds Button
+		taDisplay = new JTextArea( 10, 40);
+		taDisplay.setFont(new Font("Serif", Font.ITALIC, 16));
+		taDisplay.setTabSize(3);
+		taDisplay.setLineWrap(true);
+		add(taDisplay);	 
 
 		btnCount.addActionListener(this);
 		// btnCount (source object) fires ActionEvent upon clicking
@@ -50,13 +71,20 @@ public class Windo extends Frame
 		// "super" Frame (source object) fires WindowEvent.
 		// "super" Frame adds "this" object as a WindowEvent listener.
 
-		setTitle("WindowEvent Demo"); // "super" Frame sets title
-		setSize(520, 250);            // "super" Frame sets initial size
+		setTitle("Maks., Suma, Kiekis, Vidurkis"); // "super" Frame sets title
+		setSize(520, 550);            // "super" Frame sets initial size
 		setVisible(true);             // "super" Frame shows
    }
  
    // The entry main() method
-
+	private JTextArea Tekstas() {
+	 JTextArea detailTA = new JTextArea();
+	 detailTA.setFont(new Font("Monospaced", Font.PLAIN, 14));
+	 detailTA.setTabSize(3);
+	 detailTA.setLineWrap(true);
+	 detailTA.setWrapStyleWord(false);
+	 return (detailTA);
+	}
  
    /* ActionEvent handler */
    @Override
@@ -72,11 +100,13 @@ String thisLine = null;
 																												// open input stream test.txt for reading purpose.
 			BufferedReader br = new BufferedReader( new FileReader( "duomenys.csv" ) );
 			
-			System.out.println ( "duomenu failo turinys:" );
-						
+			taDisplay.append ("Pradedam darba" + "\n");
+			taDisplay.append ( "duomenu failo turinys:" + "\n");
+			
+			new JTextArea (); 			
 			while ( ( thisLine = br.readLine() ) != null ) {
 			 
-				System.out.println( thisLine );
+				taDisplay.append( thisLine + "\n" );
 				String[] skaiciu_strs = thisLine.split ( "," );
 				
 				for ( int i=0; i < skaiciu_strs .length; i++ ) {
@@ -85,8 +115,17 @@ String thisLine = null;
 					
 					Double.parseDouble (  skaiciu_strs [ i ] );
 					
+					if (kiekis > 10){
+					
+					skaiciai [ kiekis ] = 
+					
+					Double.parseDouble ((  skaiciu_strs [ i ] ) + "\n");
+					
+					} 
+					
+					skaic += ( skaiciai [ i ]) + " , ";
 					kiekis++;
-					System.out.println( "Rastas skaicius  " + skaiciai [ i ] );
+					//taDisplay.append( "Rastas skaicius  " + skaiciai [ i ] );
 				} 
 				
 			}  
@@ -97,7 +136,7 @@ String thisLine = null;
 			e.printStackTrace();
 		}
 						
-		System.out.println( "Nuskaityta " + kiekis + " skaiciu." );
+		taDisplay.append( "Nuskaityta " + kiekis + " skaiciu." + "\n");
 			
 		if ( kiekis > 0 ) {
 		
@@ -113,20 +152,21 @@ String thisLine = null;
 				}
 			}
 			
-			System.out.println ( "Maksimali reiksme skaiciu sekoje: " + max );
-			System.out.println ( "Skaiciu suma: " + suma );
+			taDisplay.append( "Maksimali reiksme skaiciu sekoje: " + max + "\n" );
+			taDisplay.append( "Skaiciu suma: " + suma + "\n" );
 			vid = suma / kiekis;
-			System.out.println ( "Vidurkis: " + vid );
+			taDisplay.append( "Vidurkis: " + vid + "\n" );
 
-			System.out.println ( "Skaiciai didesni uz vidurki: " );
+			taDisplay.append( "Skaiciai didesni uz vidurki: "  + "\n");
 			
 			double likusiu_suma = 0;
 			
 			for( int i = 0; i< kiekis; i++) {
 			
 				if ( skaiciai [ i ] > vid ) {
+					
 				
-						System.out.print ( skaiciai [ i ] + ", " );
+						taDisplay.append ( skaiciai [ i ] + ", " );
 					
 				} else {
 				
@@ -134,7 +174,7 @@ String thisLine = null;
 				}
 			}
 			
-			System.out.println( "likusiu skaiciu suma: " + likusiu_suma );
+			taDisplay.append("\n" + "likusiu skaiciu suma: " + likusiu_suma + "\n" );
 			
 		}
 		
@@ -148,15 +188,15 @@ String thisLine = null;
 					min = skaiciai [ i ];
 				}
 			}
-			System.out.println( "minimumas: " + suma );
+			taDisplay.append( "minimumas: " + suma + "\n" );
 			
 		}
 		
      
-	 ++count;
-      tfCount.setText(count + ""); 
-	  taDisplay.append("Pradedam darba" +  + "\n");
-	  taDisplay.append( skaiciai + "\n");
+		++count;
+		tfCount.setText(count + ""); 
+		//taDisplay.append( "Nuskaityta " + kiekis + " skaiciu." );
+	
 	  
 	
    }
@@ -164,7 +204,8 @@ String thisLine = null;
     public static void main(String[] args) throws Exception{			
 	
 		new Windo();
-	  		
+		
+	  	
    }
    /* WindowEvent handlers */
    // Called back upon clicking close-window button
